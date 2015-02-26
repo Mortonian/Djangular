@@ -16,3 +16,12 @@ class Choice(models.Model):
     def __unicode__(self):
     	return self.choice_text
 
+
+class Feedback(models.Model):
+    question = models.ForeignKey(Question, related_name='feedbacks')
+    feedback_text = models.CharField(max_length=500)
+    pub_date = models.DateTimeField('date published')
+
+    def __unicode__(self):
+    	return self.feedback_text
+

@@ -1,10 +1,15 @@
 from django.contrib import admin
-from polls.models import Choice, Question
+from polls.models import Choice, Question, Feedback
 
 
 class ChoiceInline(admin.StackedInline):
     model = Choice
     extra = 3
+
+
+class FeedbackInline(admin.StackedInline):
+    model = Feedback
+    extra = 1
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -13,6 +18,6 @@ class QuestionAdmin(admin.ModelAdmin):
         ('Date information', {'fields': ['pub_date'],
                               'classes': ['collapse']}),
     ]
-    inlines = [ChoiceInline]
+    inlines = [ChoiceInline, FeedbackInline]
 
 admin.site.register(Question, QuestionAdmin)
