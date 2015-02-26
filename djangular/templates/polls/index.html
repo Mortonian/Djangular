@@ -15,6 +15,12 @@ Polls
             <a ui-sref="questionDetail({questionId:question.id})">
                 [[question.question_text]]
             </a>
+            --
+            <i>
+                <a ui-sref="questionResults({questionId:question.id})">
+                    ([[question.totalVotes]] responses)
+                </a>
+            </i>
         </li>
     </ul>
 </script>
@@ -22,7 +28,7 @@ Polls
 
 
 <script type="text/ng-template" id="questionDetail">
-    <form class="form" ng-submit="vote()" ng-show="!voted">
+    <form class="form" ng-submit="vote()">
         <h2>[[question.question_text]]</h2>
         <div class="radio" ng-repeat="choice in question.choices">
           <label>
@@ -33,19 +39,23 @@ Polls
         </div>
         <input type="submit" class="btn btn-info" />
     </form>
-    <div ng-show="voted">
-        <h2>[[question.question_text]]</h2>
-        <div ng-repeat="choice in question.choices" style="width: 50%">
-            [[choice.choice_text]] : [[choice.votes ]]
-            <div class="progress progress-striped">
-              <div class="progress-bar progress-bar-info" 
-                choice-percentage votes="choice.votes" total="question.totalVotes" >
-              </div>
-            </div>
-        </div>
-    </div><br>
     <a ui-sref="questionList"> << Back to list</a>
 </script>
+
+
+<script type="text/ng-template" id="questionResults">
+    <h2>[[question.question_text]]</h2>
+    <div ng-repeat="choice in question.choices" style="width: 50%">
+        [[choice.choice_text]] : [[choice.votes ]]
+        <div class="progress progress-striped">
+          <div class="progress-bar progress-bar-info" 
+            choice-percentage votes="choice.votes" total="question.totalVotes" >
+          </div>
+        </div>
+    </div>
+    <a ui-sref="questionList"> << Back to list</a>
+</script>
+
 {% endblock %}
 
 {% block javascript %}

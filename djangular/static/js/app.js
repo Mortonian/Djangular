@@ -29,6 +29,18 @@
           return question;
         }
       }
+    }).state('questionResults', {
+      url: '/{questionId:[0-9]+}/results',
+      templateUrl: 'questionResults',
+      controller: 'questionResultsController',
+      resolve: {
+        question: function($stateParams, $log, Question) {
+          var question;
+          question = new Question(null);
+          question.get($stateParams.questionId);
+          return question;
+        }
+      }
     });
   });
 

@@ -6,7 +6,6 @@ controllers.controller('questionListController', ($scope, $state, $log, question
 
 controllers.controller('questionDetailController', ($scope, $state, $log, question) ->
   $scope.question = question
-  $scope.voted = false
   $scope.voteChoice = 0
 
   $scope.vote = ->
@@ -16,7 +15,10 @@ controllers.controller('questionDetailController', ($scope, $state, $log, questi
             $scope.question.totalVotes+=1
             choice.update()
             break
-    $scope.voted = true
+    $state.go('questionResults', {questionId:question.id})
 )
 
+controllers.controller('questionResultsController', ($scope, $state, $log, question) ->
+  $scope.question = question
+)
 

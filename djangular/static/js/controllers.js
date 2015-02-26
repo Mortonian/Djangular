@@ -9,7 +9,6 @@
 
   controllers.controller('questionDetailController', function($scope, $state, $log, question) {
     $scope.question = question;
-    $scope.voted = false;
     $scope.voteChoice = 0;
     return $scope.vote = function() {
       var choice, _i, _len, _ref;
@@ -23,8 +22,14 @@
           break;
         }
       }
-      return $scope.voted = true;
+      return $state.go('questionResults', {
+        questionId: question.id
+      });
     };
+  });
+
+  controllers.controller('questionResultsController', function($scope, $state, $log, question) {
+    return $scope.question = question;
   });
 
 }).call(this);

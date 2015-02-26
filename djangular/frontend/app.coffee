@@ -28,6 +28,16 @@ app.config(($interpolateProvider, $stateProvider, $urlRouterProvider) ->
                     question.get($stateParams.questionId)
                     return question
         )
+        .state('questionResults'
+            url: '/{questionId:[0-9]+}/results'
+            templateUrl: 'questionResults'
+            controller: 'questionResultsController'
+            resolve:
+                question : ($stateParams, $log, Question)->
+                    question = new Question(null)
+                    question.get($stateParams.questionId)
+                    return question
+        )
 )
 
 
