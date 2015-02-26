@@ -5,14 +5,16 @@ from django.shortcuts import render
 
 
 class QuestionList(generics.ListCreateAPIView):
-    model = Question
+    queryset = Question.objects.all()
+    #model = Question
     serializer_class = QuestionSerializer
     permission_classes = [
         permissions.AllowAny
     ]
 
 class QuestionDetail(generics.RetrieveAPIView):
-	model = Question
+	queryset = Question.objects.all()
+	#model = Question
 	serializer_class = QuestionSerializer
 	lookup_url_kwarg = 'question_pk'
 	permission_classes = [
@@ -20,7 +22,8 @@ class QuestionDetail(generics.RetrieveAPIView):
 	]
 
 class ChoiceUpdate(generics.UpdateAPIView):
-	model = Choice
+	queryset = Choice.objects.all()
+	#model = Choice
 	serializer_class = ChoiceSerializer
 	lookup_url_kwarg = 'choice_pk'
 	permission_classes = [
@@ -28,7 +31,8 @@ class ChoiceUpdate(generics.UpdateAPIView):
 	]
 
 class ChoiceList(generics.ListCreateAPIView):
-    model = Choice
+    queryset = Choice.objects.all()
+    #model = Choice
     serializer_class = ChoiceSerializer
     permission_classes = [
         permissions.AllowAny
