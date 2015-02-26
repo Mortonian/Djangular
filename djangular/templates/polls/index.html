@@ -53,6 +53,28 @@ Polls
           </div>
         </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><i>Feedback on this question</i></div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="feedback in question.feedbacks">
+                [[feedback.feedback_text]]
+                <div ng-if="feedback.pub_date" style="padding:10px; font-style: italic">
+                -- Submitted at [[feedback.pub_date]]
+                </div>
+            </li>
+            <li class="list-group-item" >        
+                <form class="form">
+                    <div>Leave us feedback on this question</div>
+                    <div class="textarea">
+                      <label>
+                        <textarea />
+                      </label>
+                    </div>
+                    <input type="submit" class="btn btn-info" />
+                </form>
+            </li>
+        </ul>
+    </div>
     <a ui-sref="questionList"> << Back to list</a>
 </script>
 

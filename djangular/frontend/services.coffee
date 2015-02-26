@@ -19,7 +19,26 @@ services.factory('Choice', ($http, $log)->
     return Choice
 )
 
-services.factory('Question', (Choice, $http, $log) ->
+services.factory('Feedback', ($http, $log)->
+    #log = $log
+    class Feedback
+        constructor: (data) ->
+            @feedback_text = data.feedback_text
+            @id = data.id
+            @pub_date = data.pub_date
+
+        update : ->
+            data = {'feedback_text' : @feedback_text}
+            $http({method: 'PUT', url: '/polls/feedbacks/' + @id + '/', data:data})
+            .success (data) =>
+                $log.info("Succesfully left feedback")
+            .error (data) =>
+                $log.info("Failed to leave feedback.")
+
+    return Feedback
+)
+
+services.factory('Question', (Choice, Feedback, $http, $log) ->
     class Question
         constructor : (data) ->
             if data != null
@@ -28,11 +47,14 @@ services.factory('Question', (Choice, $http, $log) ->
             @question_text = data.question_text
             @id = data.id
             @choices = []
+            @feedbacks = []
             @totalVotes = 0
             for choice in data.choices
                 c = new Choice(choice)
                 @totalVotes += c.votes
                 @choices.push(new Choice(choice))
+            for feedback in data.feedbacks
+                @feedbacks.push(new Feedback(feedback))
 
         get : (questionId) ->
             $http({method: 'GET', url: '/polls/questions/' + questionId + '/'})
