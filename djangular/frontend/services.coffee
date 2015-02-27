@@ -49,12 +49,19 @@ services.factory('Question', (Choice, Feedback, $http, $log) ->
             @choices = []
             @feedbacks = []
             @totalVotes = 0
+            @lastResponseDate = data.last_response_date
             for choice in data.choices
                 c = new Choice(choice)
                 @totalVotes += c.votes
                 @choices.push(new Choice(choice))
             for feedback in data.feedbacks
                 @feedbacks.push(new Feedback(feedback))
+
+        upvote : () ->
+            $log.info("upvoting question " + @id)
+
+        downvote : () ->
+            $log.info("downvote question " + @id)
 
         get : (questionId) ->
             $http({method: 'GET', url: '/polls/questions/' + questionId + '/'})

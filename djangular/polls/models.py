@@ -4,6 +4,7 @@ import datetime
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    last_response_date = models.DateTimeField('last response date', null=True, blank=True)
 
     def __unicode__(self):
     	return self.question_text
@@ -16,6 +17,12 @@ class Choice(models.Model):
 
     def __unicode__(self):
     	return self.choice_text
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamp on question '''
+        self.question.last_response_date = datetime.datetime.today()
+        self.question.save()
+        return super(Choice, self).save(*args, **kwargs)
 
 
 class Feedback(models.Model):

@@ -10,21 +10,34 @@ Polls
 <div ui-view></div>
 
 <script type="text/ng-template" id="questionList">
-    <ul>
-        <li ng-repeat="question in questions">
-            <a ui-sref="questionDetail({questionId:question.id})">
-                [[question.question_text]]
-            </a>
-            --
-            <i>
-                <a ui-sref="questionResults({questionId:question.id})">
-                    ([[question.totalVotes]] responses)
-                </a>
-            </i>
-        </li>
-    </ul>
-</script>
+    <div class="panel panel-default" ng-repeat="question in questions">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
 
+            <div class="row">
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-default btn-s" ng-click="question.upvote()">
+                        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                    </button>
+                    <div style="margin-top:10px" />
+                    <button type="button" class="btn btn-default btn-s" ng-click="question.downvote()">
+                        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="col-md-offset-1">
+                    <a ui-sref="questionDetail({questionId:question.id})">
+                        <h3>[[question.question_text]]</h3>
+                    </a>
+                    <br />
+                    <i>
+                        [[question.lastResponseDate  ? "Last Updated " + question.lastResponseDate + " -- " : "" ]] 
+                        [[question.totalVotes]] responses -- <a ui-sref="questionResults({questionId:question.id})">View Responses</a>
+                    </i>
+                </div>
+            </row>
+        </div>
+    </div>
+</script>
 
 
 <script type="text/ng-template" id="questionDetail">
