@@ -5,6 +5,7 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     last_response_date = models.DateTimeField('last response date', null=True, blank=True)
+    upvotes = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
     	return self.question_text

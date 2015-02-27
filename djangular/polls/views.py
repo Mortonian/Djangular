@@ -1,4 +1,5 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, views
+from rest_framework.response import Response
 from .models import Question, Choice, Feedback
 from .serializers import QuestionSerializer, ChoiceSerializer, FeedbackSerializer
 from django.shortcuts import render
@@ -52,6 +53,28 @@ class FeedbackList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.AllowAny
     ]
+
+class UpvoteApiView(views.APIView):
+
+    def post(self, request, *args, **kwargs):
+        question = Question.objects.get(id=kwargs['question_pk'])
+        if question.upvotes:
+            question.upvotes = question.upvotes+1
+        else:
+            question.upvotes = 1
+        question.save()
+        return Response({"question": question.id, "upvotes": question.upvotes, "success": True})
+
+class DownvoteApiView(views.APIView):
+
+    def post(self, request, *args, **kwargs):
+        question = Question.objects.get(id=kwargs['question_pk'])
+        if question.upvotes:
+            question.upvotes = question.upvotes-1
+        else:
+            question.upvotes = -1
+        question.save()
+        return Response({"question": question.id, "upvotes": question.upvotes, "success": True})
 
 def index(request):
     return render(request, 'polls/index.html')

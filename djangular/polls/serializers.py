@@ -20,9 +20,10 @@ class QuestionSerializer(serializers.ModelSerializer):
     choices = ChoiceSerializer(many=True)
     feedbacks = FeedbackSerializer(many=True)
     last_response_date = serializers.DateTimeField(required=False)
+    upvotes = serializers.IntegerField(required=False)
 
     class Meta:
         model = Question
         # 'last_response_date'
-        fields = ('question_text', 'last_response_date', 'choices', 'feedbacks', 'id')
+        fields = ('question_text', 'last_response_date', 'upvotes', 'choices', 'feedbacks', 'id')
 

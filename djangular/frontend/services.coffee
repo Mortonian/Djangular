@@ -52,6 +52,7 @@ services.factory('Question', (Choice, Feedback, $http, $log) ->
             @totalVotes = 0
             @lastResponseDate = data.last_response_date
             @lastResponseDateFmt = moment(data.last_response_date).fromNow()
+            @upvotes = data.upvotes
             for choice in data.choices
                 c = new Choice(choice)
                 @totalVotes += c.votes
@@ -60,10 +61,28 @@ services.factory('Question', (Choice, Feedback, $http, $log) ->
                 @feedbacks.push(new Feedback(feedback))
 
         upvote : () ->
-            $log.info("upvoting question " + @id)
+            if @upvotes 
+                @upvotes = @upvotes + 1
+            else 
+                @upvotes = 1
+            $http({method: 'POST', url: '/polls/questions/' + @id + '/upvote'})
+            .success (data) =>
+                @upvotes = data.upvotes
+                $log.info("Succesfully upvoted")
+            .error (data) =>
+                $log.info("Failed to upvote.")
 
         downvote : () ->
-            $log.info("downvote question " + @id)
+            if @upvotes 
+                @upvotes = @upvotes - 1
+            else 
+                @upvotes = -1
+            $http({method: 'POST', url: '/polls/questions/' + @id + '/downvote'})
+            .success (data) =>
+                @upvotes = data.upvotes
+                $log.info("Succesfully downvoted")
+            .error (data) =>
+                $log.info("Failed to downvote.")
 
         get : (questionId) ->
             $http({method: 'GET', url: '/polls/questions/' + questionId + '/'})
@@ -94,6 +113,7 @@ services.factory('Questions', ($log, $http, Question) ->
         questions['all'].length = 0
         for question in data
             questions['all'].push(new Question(question))
+        questions['all'] = questions['all'].sort((a,b) ->  b.upvotes - a.upvotes )
 
     fetch: ->
         $http({method: 'GET', url: '/polls/questions'})

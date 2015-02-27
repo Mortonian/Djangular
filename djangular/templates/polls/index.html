@@ -16,11 +16,13 @@ Polls
 
             <div class="row">
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-default btn-s" ng-click="question.upvote()">
+                    <button type="button" class="btn btn-default btn-s" ng-click="upvote(question)">
                         <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
                     </button>
-                    <div style="margin-top:10px" />
-                    <button type="button" class="btn btn-default btn-s" ng-click="question.downvote()">
+                    <div style="margin-top:10px; text-align:center" >
+                        <strong>[[question.upvotes ? question.upvotes : 0]]</strong>
+                    </div>
+                    <button type="button" class="btn btn-default btn-s" ng-click="downvote(question)">
                         <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
                     </button>
                 </div>

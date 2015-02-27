@@ -2,6 +2,16 @@ controllers = angular.module('pollApp.controllers', [])
 
 controllers.controller('questionListController', ($scope, $state, $log, questions) ->
   $scope.questions = questions.all
+  $scope.sortQuestions = (questions) ->
+        questions.sort((a,b) ->  b.upvotes - a.upvotes )
+
+  $scope.upvote = (question) ->
+    question.upvote()
+    $scope.questions = $scope.sortQuestions($scope.questions)
+
+  $scope.downvote = (question) ->
+    question.downvote()
+    $scope.questions = $scope.sortQuestions($scope.questions)
 )
 
 controllers.controller('questionDetailController', ($scope, $state, $log, question) ->
