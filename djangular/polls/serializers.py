@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Question, Choice, Feedback
 
 class ChoiceSerializer(serializers.ModelSerializer):
+    question = serializers.PrimaryKeyRelatedField(required=False, read_only=True)
 
     class Meta:
         model = Choice
