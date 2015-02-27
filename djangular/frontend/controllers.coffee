@@ -19,13 +19,7 @@ controllers.controller('questionDetailController', ($scope, $state, $log, questi
   $scope.voteChoice = 0
 
   $scope.vote = ->
-    for choice in $scope.question.choices
-        if choice.id == parseInt($scope.voteChoice)
-            choice.votes+=1
-            $scope.question.totalVotes+=1
-            choice.update()
-            break
-    $state.go('questionResults', {questionId:question.id})
+    question.voteOnChoice(parseInt($scope.voteChoice), () -> $state.go('questionResults', {questionId:question.id}))
 )
 
 controllers.controller('questionResultsController', ($scope, $state, $log, question) ->

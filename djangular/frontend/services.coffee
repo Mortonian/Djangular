@@ -8,13 +8,15 @@ services.factory('Choice', ($http, $log)->
             @id = data.id
             @votes = data.votes
 
-        update : ->
+        update : (cb) ->
             data = {'votes' : @votes, 'choice_text' : @choice_text}
             $http({method: 'PUT', url: '/polls/choices/' + @id + '/', data:data})
             .success (data) =>
                 $log.info("Succesfully voted")
+                cb()
             .error (data) =>
                 $log.info("Failed to vote.")
+                cb()
 
     return Choice
 )
@@ -91,6 +93,14 @@ services.factory('Question', (Choice, Feedback, $http, $log) ->
                 $log.info("Succesfully fetched question")
             .error (data) =>
                 $log.info("Failed to fetch question.")
+
+        voteOnChoice : (voteChoice, cb) ->
+            for choice in @choices
+                if choice.id == voteChoice
+                    choice.votes+=1
+                    @totalVotes+=1
+                    choice.update(cb)
+                    break
 
         addFeedback: (feedbackText) ->
             data = {'feedback_text' : feedbackText, 'question' : @id }
