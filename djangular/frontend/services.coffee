@@ -26,6 +26,7 @@ services.factory('Feedback', ($http, $log)->
             @feedback_text = data.feedback_text
             @id = data.id
             @pub_date = data.pub_date
+            @pub_date_fmt = moment(data.pub_date).calendar()
 
         update : ->
             data = {'feedback_text' : @feedback_text}
@@ -50,6 +51,7 @@ services.factory('Question', (Choice, Feedback, $http, $log) ->
             @feedbacks = []
             @totalVotes = 0
             @lastResponseDate = data.last_response_date
+            @lastResponseDateFmt = moment(data.last_response_date).fromNow()
             for choice in data.choices
                 c = new Choice(choice)
                 @totalVotes += c.votes

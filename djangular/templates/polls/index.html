@@ -30,8 +30,8 @@ Polls
                     </a>
                     <br />
                     <i>
-                        [[question.lastResponseDate  ? "Last Updated " + question.lastResponseDate + " -- " : "" ]] 
-                        [[question.totalVotes]] responses -- <a ui-sref="questionResults({questionId:question.id})">View Responses</a>
+                        [[question.lastResponseDate  ? "Last responded to " + question.lastResponseDateFmt + " -- " : "" ]] 
+                        [[question.totalVotes]] [[ question.totalVotes != 1 ?   "responses" : "response" ]] -- <a ui-sref="questionResults({questionId:question.id})">View Responses</a>
                     </i>
                 </div>
             </row>
@@ -71,8 +71,8 @@ Polls
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="feedback in question.feedbacks">
                 [[feedback.feedback_text]]
-                <div ng-if="feedback.pub_date" style="padding:10px; font-style: italic">
-                -- Submitted at [[feedback.pub_date]]
+                <div ng-if="feedback.pub_date_fmt" style="padding:10px; font-style: italic">
+                -- Submitted at [[feedback.pub_date_fmt]]
                 </div>
             </li>
         </ul>
@@ -105,4 +105,5 @@ Polls
 <script src="{{ STATIC_URL}}js/controllers.js"></script>
 <script src="{{ STATIC_URL}}js/directives.js"></script>
 <script src="{{ STATIC_URL}}js/services.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 {% endblock %}
