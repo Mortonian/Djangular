@@ -22,8 +22,7 @@ controllers.controller('questionResultsController', ($scope, $state, $log, quest
   $scope.question = question
 
   $scope.submitFeedback = ->
-    $log.info("attempting to submit this feedback " + $scope.feedbackToSubmit)
-    question.addFeedback($scope.feedbackToSubmit)
-    $scope.feedbackToSubmit = ''
+    question.addFeedback($scope.feedbackToSubmit.feedback_text)
+    $scope.feedbackToSubmit.feedback_text = ''
 )
 

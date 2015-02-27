@@ -66,15 +66,12 @@ services.factory('Question', (Choice, Feedback, $http, $log) ->
 
         addFeedback: (feedbackText) ->
             data = {'feedback_text' : feedbackText, 'question' : @id }
-            $log.info("trying to add feedback: " + data)
             $http({method: 'POST', url: '/polls/feedbacks', data:data})
             .success (data) =>
-                $log.info("Succesfully added feedback: "+data)
+                $log.info("Succesfully added feedback")
                 @feedbacks.push(new Feedback(data))
-                return ""
             .error (data) =>
-                $log.info("Failed to add feedback: "+data)
-                return feedbackText
+                $log.info("Failed to add feedback")
 
     return Question
 )

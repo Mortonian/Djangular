@@ -64,11 +64,11 @@ Polls
             </li>
             <li class="list-group-item" >        
                 <form class="form" ng-submit="submitFeedback()" >
-                    <div>Leave us feedback on this question</div>
+                    <h4>Leave us feedback on this question</h4>
                     <div class="textarea">
-                      <label>
-                        <textarea ng-model="$parent.feedbackToSubmit" name="feedbackToSubmit" />
-                      </label>
+                        <label>
+                            <textarea ng-model="$parent.feedbackToSubmit.feedback_text" name="feedbackToSubmit" cols="80" rows="10" />
+                        </label>
                     </div>
                     <input type="submit" class="btn btn-info" />
                 </form>
