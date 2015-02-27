@@ -62,14 +62,19 @@ Polls
                 -- Submitted at [[feedback.pub_date]]
                 </div>
             </li>
+        </ul>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><i>Leave us feedback on this question</i></div>
             <li class="list-group-item" >        
-                <form class="form" ng-submit="submitFeedback()" >
-                    <h4>Leave us feedback on this question</h4>
+                <form class="form" ng-submit="submitFeedback()" > 
+                    <br />
                     <div class="textarea">
                         <label>
-                            <textarea ng-model="$parent.feedbackToSubmit.feedback_text" name="feedbackToSubmit" cols="80" rows="10" />
+                            <textarea ng-model="$parent.feedbackToSubmit.feedback_text" name="feedbackToSubmit" cols="80" rows="8" />
                         </label>
                     </div>
+                    <br />
                     <input type="submit" class="btn btn-info" />
                 </form>
             </li>
