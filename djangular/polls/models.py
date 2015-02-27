@@ -21,7 +21,8 @@ class Choice(models.Model):
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamp on question '''
-        self.question.last_response_date = datetime.datetime.today()
+        if self.votes > 0:
+            self.question.last_response_date = datetime.datetime.today()
         self.question.save()
         return super(Choice, self).save(*args, **kwargs)
 
