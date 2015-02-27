@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -24,4 +25,10 @@ class Feedback(models.Model):
 
     def __unicode__(self):
     	return self.feedback_text
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.pub_date = datetime.datetime.today()
+        return super(Feedback, self).save(*args, **kwargs)
 

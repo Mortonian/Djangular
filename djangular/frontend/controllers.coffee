@@ -20,5 +20,10 @@ controllers.controller('questionDetailController', ($scope, $state, $log, questi
 
 controllers.controller('questionResultsController', ($scope, $state, $log, question) ->
   $scope.question = question
+
+  $scope.submitFeedback = ->
+    $log.info("attempting to submit this feedback " + $scope.feedbackToSubmit)
+    question.addFeedback($scope.feedbackToSubmit)
+    $scope.feedbackToSubmit = ''
 )
 
